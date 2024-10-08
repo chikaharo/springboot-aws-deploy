@@ -16,17 +16,20 @@ phases:
       - echo building the Jar file
       - mvn clean install
       - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      # - docker build -t $REPOSITORY_URI:latest .
+      # - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker build -t spring-demo-deploy .
+      - docker tag spring-demo-deploy:latest 117001856078.dkr.ecr.ap-southeast-1.amazonaws.com/spring-demo-deploy:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo pushing to repo
       - echo reposiroty url variable $REPOSITORY_URI
       - echo image tag variable $IMAGE_TAG
-      - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 117001856078.dkr.ecr.ap-southeast-1.amazonaws.com
+      # - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 117001856078.dkr.ecr.ap-southeast-1.amazonaws.com
       # - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      # - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push 117001856078.dkr.ecr.ap-southeast-1.amazonaws.com/spring-demo-deploy:latest
       - echo Writing image definitions file...
       # Give your container name
       - DOCKER_CONTAINER_NAME=spring-demo-deploy
