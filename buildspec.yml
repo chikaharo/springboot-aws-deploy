@@ -22,6 +22,9 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo pushing to repo
+      - echo "Repository URI: $REPOSITORY_URI"  
+      - echo "Image Tag: $IMAGE_TAG"
+      - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 117001856078.dkr.ecr.ap-southeast-1.amazonaws.com
       # - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
